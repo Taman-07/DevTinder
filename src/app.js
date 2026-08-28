@@ -10,10 +10,7 @@ require('dotenv').config();
 
 app.use(
     cors({
-  origin: [
-    "http://localhost:5173",
-    "https://devtinderfrontend-production.up.railway.app/"
-],
+  origin: "http://localhost:5173",
   credentials: true,
 })
 );
