@@ -10,7 +10,9 @@ require('dotenv').config();
 
 app.use(
     cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173",
+    "https://pair-up.tamanjot707.workers.dev/"
+  ],
   credentials: true,
 })
 );
