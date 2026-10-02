@@ -17,8 +17,9 @@ const initializeSocket = (server) => {
         "http://localhost:5173",
         "https://pair-up.tamanjot707.workers.dev",
       ],
+      credentials: true,
     },
-  });
+});
 
   io.on("connection", (socket) => {
     socket.on("joinChat", ({ firstName, userId, targetUserId }) => {
