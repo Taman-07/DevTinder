@@ -8,14 +8,18 @@ const http = require('http');
 require('dotenv').config();
 
 
+app.set("trust proxy", 1);
+
 app.use(
-    cors({
-  origin: ["http://localhost:5173",
-    "https://pair-up.tamanjot707.workers.dev/"
-  ],
-  credentials: true,
-})
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://pair-up.tamanjot707.workers.dev",
+    ],
+    credentials: true,
+  })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
