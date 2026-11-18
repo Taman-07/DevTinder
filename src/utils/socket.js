@@ -15,7 +15,7 @@ const initializeSocket = (server) => {
     cors: {
       origin: [
         "http://localhost:5173",
-        "https://devtinder-frontend.tamanjot707.workers.dev/",
+        "https://devtinder-frontend.tamanjot707.workers.dev",
       ],
       credentials: true,
     },
