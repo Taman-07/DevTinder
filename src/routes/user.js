@@ -77,20 +77,14 @@ userRouter.get("/user/connections",
     });
 
 
+// Feed: students AND alumni both see alumni cards, except
+// 0. their own card
+// 1. their connections
+// 2. ignored people
+// 3. people they already sent a request to
 userRouter.get("/feed", userAuth, async (req, res) => {
     try {
-        // A junior sees only alumni cards, except
-        // 0. his own card
-        // 1. his connections
-        // 2. ignored people
-        // 3. already sent the connection request
-        // Alumni don't swipe. They only handle the requests they receive.
-
         const loggedInUser = req.user;
-
-        if (loggedInUser.role === "alumni") {
-            return res.send([]);
-        }
 
         // pagination (safe against page=0, negative numbers and text)
         const page = Math.max(parseInt(req.query.page) || 1, 1);
@@ -98,11 +92,11 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         limit = Math.min(Math.max(limit, 1), 50);
         const skip = (page - 1) * limit;
 
-        // Find all connection requests (sent + received)
+        // everyone I already sent a request to or received one from
         const connectionRequests = await ConnectionRequest.find({
             $or: [
-                { fromUserId: loggedInUser._id }, // I send the request
-                { toUserId: loggedInUser._id },   // I received the request
+                { fromUserId: loggedInUser._id },
+                { toUserId: loggedInUser._id },
             ],
         }).select("fromUserId toUserId");
 
@@ -128,6 +122,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         res.status(400).send("Error: " + err.message);
     }
 });
+
 
 // search alumni by name, company or job role
 userRouter.get("/user/search", userAuth, async (req, res) => {
